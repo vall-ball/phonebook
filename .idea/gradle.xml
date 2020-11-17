@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="GRADLE" />
+        <option name="distributionType" value="WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Phone Book/task" />
+            <option value="$PROJECT_DIR$/Problems/A fixed point" />
+            <option value="$PROJECT_DIR$/Problems/A new rockstar game" />
+            <option value="$PROJECT_DIR$/Problems/Breakfast Decorator" />
+            <option value="$PROJECT_DIR$/Problems/Builder" />
+            <option value="$PROJECT_DIR$/Problems/Builder (1)" />
+            <option value="$PROJECT_DIR$/Problems/Burgers" />
+            <option value="$PROJECT_DIR$/Problems/Check for null" />
+            <option value="$PROJECT_DIR$/Problems/Cinema Facade" />
+            <option value="$PROJECT_DIR$/Problems/Coffee Decorator" />
+            <option value="$PROJECT_DIR$/Problems/Complete a class" />
+            <option value="$PROJECT_DIR$/Problems/Complete the eager singleton" />
+            <option value="$PROJECT_DIR$/Problems/Computer Facade" />
+            <option value="$PROJECT_DIR$/Problems/Count comparisons" />
+            <option value="$PROJECT_DIR$/Problems/Count elements of an array in another one" />
+            <option value="$PROJECT_DIR$/Problems/Descending sorting swaps" />
+            <option value="$PROJECT_DIR$/Problems/Does the array contain the element" />
+            <option value="$PROJECT_DIR$/Problems/Find a block that may contain the target value" />
+            <option value="$PROJECT_DIR$/Problems/Finding a collection of elements in a sorted array" />
+            <option value="$PROJECT_DIR$/Problems/Fix me" />
+            <option value="$PROJECT_DIR$/Problems/Forex Broker" />
+            <option value="$PROJECT_DIR$/Problems/Geek Builder" />
+            <option value="$PROJECT_DIR$/Problems/Implementing the EntrySet method" />
+            <option value="$PROJECT_DIR$/Problems/Invert an array" />
+            <option value="$PROJECT_DIR$/Problems/Laptop factory" />
+            <option value="$PROJECT_DIR$/Problems/Move the pivot" />
+            <option value="$PROJECT_DIR$/Problems/Phone Book" />
+            <option value="$PROJECT_DIR$/Problems/Phone factory" />
+            <option value="$PROJECT_DIR$/Problems/Pizza Decorator" />
+            <option value="$PROJECT_DIR$/Problems/Print comparisons" />
+            <option value="$PROJECT_DIR$/Problems/Print content" />
+            <option value="$PROJECT_DIR$/Problems/Rehashing" />
+            <option value="$PROJECT_DIR$/Problems/Remote Controller" />
+            <option value="$PROJECT_DIR$/Problems/Removing" />
+            <option value="$PROJECT_DIR$/Problems/Robot Builder" />
+            <option value="$PROJECT_DIR$/Problems/Rockstar games" />
+            <option value="$PROJECT_DIR$/Problems/Search indexes of values in another array" />
+            <option value="$PROJECT_DIR$/Problems/Searching in a descending sorted array" />
+            <option value="$PROJECT_DIR$/Problems/Smart house" />
+            <option value="$PROJECT_DIR$/Problems/Stock Broker" />
+            <option value="$PROJECT_DIR$/Problems/Subway Sandwich" />
+            <option value="$PROJECT_DIR$/Problems/Swaps" />
+            <option value="$PROJECT_DIR$/Problems/The first element" />
+            <option value="$PROJECT_DIR$/Problems/The first occurrence in the subarray" />
+            <option value="$PROJECT_DIR$/Problems/The index of the K occurrence" />
+            <option value="$PROJECT_DIR$/Problems/The index of the last occurrence" />
+            <option value="$PROJECT_DIR$/Problems/The number of occurrences" />
+            <option value="$PROJECT_DIR$/Problems/Undo command" />
+            <option value="$PROJECT_DIR$/util" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

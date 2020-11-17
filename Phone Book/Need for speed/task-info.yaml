@@ -1,0 +1,245 @@
+type: edu
+custom_name: stage3
+files:
+- name: src/phonebook/Main.java
+  visible: true
+  text: |
+    package phonebook;
+
+    public class Main {
+        public static void main(String[] args) {
+            System.out.println("Hello World!");
+        }
+    }
+  learner_created: false
+- name: test/PhoneBookTest.java
+  visible: false
+  text: "import org.hyperskill.hstest.stage.StageTest;\nimport org.hyperskill.hstest.testcase.CheckResult;\n\
+    import org.hyperskill.hstest.testcase.TestCase;\nimport phonebook.Main;\n\nimport\
+    \ java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.List;\nimport\
+    \ java.util.regex.Matcher;\nimport java.util.regex.Pattern;\n\npublic class PhoneBookTest\
+    \ extends StageTest {\n    public PhoneBookTest() {\n        super(Main.class);\n\
+    \    }\n    \n    private long timeOnTestStart;\n    \n    @Override\n    public\
+    \ List<TestCase> generate() {\n        timeOnTestStart = System.currentTimeMillis();\n\
+    \        return Arrays.asList(\n                new TestCase().setTimeLimit(30\
+    \ * 60 * 1000)\n        );\n    }\n    \n    private CheckResult checkPhrases(String\
+    \ reply, String... phrases) {\n        reply = reply.toLowerCase();\n        for\
+    \ (String phrase : phrases) {\n            if (!reply.contains(phrase.toLowerCase()))\
+    \ {\n                return CheckResult.wrong(\"Not found the part `\" + phrase\
+    \ + \"` in your output.\");\n            }\n        }\n        return CheckResult.correct();\n\
+    \    }\n    \n    private List<String> findAll(String reply, String regex) {\n\
+    \        Matcher matcher = Pattern.compile(regex).matcher(reply);\n        List<String>\
+    \ groups = new ArrayList<>();\n        while (matcher.find()) {\n            groups.add(matcher.group());\n\
+    \        }\n        return groups;\n    }\n    \n    private String timeRegex\
+    \ = \"(\\\\d+)\\\\s*min.*?(\\\\d+)\\\\s*sec.*?(\\\\d+)\\\\s*ms\";\n    private\
+    \ Pattern timeRegexPattern = Pattern.compile(timeRegex);\n    \n    private long\
+    \ parseTimestamp(String timestamp) {\n        Matcher matcher = timeRegexPattern.matcher(timestamp);\n\
+    \        if (!matcher.matches() || matcher.groupCount() < 3) {\n            throw\
+    \ new IllegalStateException(\"???Not matches the line \" + timestamp);\n     \
+    \   }\n        int min = Integer.parseInt(matcher.group(1));\n        int sec\
+    \ = Integer.parseInt(matcher.group(2));\n        int ms = Integer.parseInt(matcher.group(3));\n\
+    \        return ms + sec * 1000 + min * 1000 * 60;\n    }\n    \n    @Override\n\
+    \    public CheckResult check(String reply, Object clue) {\n        long realTime\
+    \ = System.currentTimeMillis() - timeOnTestStart;\n        \n        reply = reply.toLowerCase();\n\
+    \        \n        CheckResult res = checkPhrases(reply,\n                \"found\"\
+    ,\n                \"min.\",\n                \"sec.\",\n                \"ms.\"\
+    ,\n                \"sorting time\",\n                \"searching time\",\n  \
+    \              \"linear search\",\n                \"bubble sort\",\n        \
+    \        \"jump search\",\n                \"quick sort\",\n                \"\
+    binary search\"\n        );\n        if (!res.isCorrect()) {\n            return\
+    \ res;\n        }\n        \n        List<String> stat1 = findAll(reply, \"500\
+    \ / 500\");\n        List<String> stat2 = findAll(reply, \"500/500\");\n     \
+    \   \n        if (stat1.size() + stat2.size() < 3) {\n            return CheckResult.wrong(\"\
+    Your output should contain 3 times the phrase `500 / 500`\");\n        }\n   \
+    \     \n        List<String> timestamps = findAll(reply, timeRegex);\n       \
+    \ if (timestamps.size() != 7) {\n            return CheckResult.wrong(\"Your output\
+    \ should contain 7 timer outputs, but found \"\n                    + timestamps.size());\n\
+    \        }\n        // should not fail..\n        long t1 = parseTimestamp(timestamps.get(0));\n\
+    \        long t2 = parseTimestamp(timestamps.get(1));\n        long t3 = parseTimestamp(timestamps.get(2));\n\
+    \        long t4 = parseTimestamp(timestamps.get(3));\n        long t5 = parseTimestamp(timestamps.get(4));\n\
+    \        long t6 = parseTimestamp(timestamps.get(5));\n        long t7 = parseTimestamp(timestamps.get(6));\n\
+    \        \n        if (Math.abs(t3 + t4 - t2) > 100) {\n            return CheckResult.wrong(\"\
+    Your third and fourth timer outputs in total (sorting and searching) \" +\n  \
+    \                  \"should be equal to the second (total search time).\");\n\
+    \        }\n        if (Math.abs(t6 + t7 - t5) > 100) {\n            return CheckResult.wrong(\"\
+    Your 6-th and 7-th timer outputs in total (sorting and searching) \" +\n     \
+    \               \"should be equal to the 5-th (total search time).\");\n     \
+    \   }\n        \n        long estimatedTime = t1 + t2 + t5;\n        if (realTime\
+    \ < 1000) {\n            return CheckResult.wrong(\"Your program completes too\
+    \ fast. Faster than a second!\");\n        }\n        \n        if (Math.abs(estimatedTime\
+    \ - realTime) > estimatedTime * 0.3) {\n            return CheckResult.wrong(\"\
+    Your estimated time is not similar to real time the program works. \" +\n    \
+    \                \"Real time: \" + realTime + \"ms, estimated time: \" + estimatedTime\
+    \ + \"ms\");\n        }\n        \n        return CheckResult.correct();\n   \
+    \ }\n}\n"
+  learner_created: false
+- name: src/phonebook/Sorter.java
+  visible: true
+  text: |-
+    package phonebook;
+
+    import java.util.List;
+
+    public class Sorter {
+
+        public boolean bubbleSort(List<String> list) {
+            long begin = System.currentTimeMillis();
+            for (int i = 0; i < list.size() - 1; i++) {
+                long now = System.currentTimeMillis();
+                if (now - begin > 61000) {
+                    return false;
+                }
+                for (int j = 0; j < list.size() - i - 1; j++) {
+                    /* if a pair of adjacent elements has the wrong order it swaps them */
+                    if (list.get(j).compareTo(list.get(j + 1)) > 0) {
+                        String temp = list.get(j);
+                        list.set(j, list.get(j + 1));
+                        list.set(j + 1, temp);
+                    }
+                }
+            }
+            return true;
+        }
+    }
+  learner_created: true
+- name: src/phonebook/Handler.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.ArrayList;
+    import java.util.HashMap;
+    import java.util.List;
+    import java.util.Map;
+
+    public class Handler {
+
+        public Map<String, String > getDictionary(List<String> list) {
+            Map<String, String> map = new HashMap<>();
+            for (String s : list) {
+                String[] arr =s.split(" ");
+                if (arr.length == 3) {
+                    map.put(arr[1] + " " + arr[2], arr[0]);
+                } else {
+                    map.put(arr[1], arr[0]);
+                }
+            }
+            return map;
+        }
+
+        public List<String> getList(List<String> list) {
+            List<String> answer = new ArrayList<>();
+            for (String s : list) {
+                String[] arr = s.split(" ");
+                if (arr.length == 3) {
+                    answer.add(arr[1] + " " + arr[2]);
+                } else {
+                    answer.add(arr[1]);
+                }
+            }
+            return answer;
+        }
+    }
+  learner_created: true
+- name: src/phonebook/Searcher.java
+  visible: true
+  text: |-
+    package phonebook;
+
+    import java.util.List;
+    import java.util.Map;
+
+    public class Searcher {
+
+        public void search(List<String> find, List<String> dictionary) {
+            int count = 0;
+            for (String s : find) {
+                for (String d : dictionary) {
+                    if (d.equals(s)) {
+                        count++;
+                    }
+
+                }
+            }
+            System.out.print("Found " + count + " / " + find.size() + " entries.");
+        }
+
+        public void  jumpSearch(List<String> find, List<String> dictionary) {
+            int count = 0;
+            for (String s : find) {
+               if (jumpSearchForOne(dictionary, s) != -1) {
+                   count++;
+               }
+            }
+            System.out.print("Found " + count + " / " + find.size() + " entries.");
+        }
+
+        public int jumpSearchForOne(List<String> list, String target) {
+            int currentRight = 0; // right border of the current block
+            int prevRight = 0; // right border of the previous block
+
+
+            /* Check the first element */
+            if (list.get(0).contains(target)) {
+                return 0;
+            }
+
+            /* Calculating the jump length over array elements */
+            int jumpLength = (int) Math.sqrt(list.size());
+
+            /* Finding a block where the element may be present */
+            while (currentRight < list.size() - 1) {
+
+                /* Calculating the right border of the following block */
+                currentRight = Math.min(list.size() - 1, currentRight + jumpLength);
+
+                if (list.get(currentRight).equals(target) ||  list.get(currentRight).compareTo(target) > 0) {
+                    break; // Found a block that may contain the target element
+                }
+
+                prevRight = currentRight; // update the previous right block border
+            }
+
+            /* If the last block is reached and it cannot contain the target value => not found */
+            if ((currentRight == list.size() - 1) && target.compareTo(list.get(currentRight)) > 0) {
+                return -1;
+            }
+
+            /* Doing linear search in the found block */
+            return backwardSearch(list, target, prevRight, currentRight);
+        }
+
+        public static int backwardSearch(List<String> array, String target, int leftExcl, int rightIncl) {
+            for (int i = rightIncl; i > leftExcl; i--) {
+                if (array.get(i).equals(target)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+    }
+
+
+    /*
+    public void search(List<String> find, Map<String, String> dictionary) {
+            int count = 0;
+            for (String s : find) {
+                if (dictionary.containsKey(s)) {
+                    count++;
+                }
+            }
+            System.out.print("Found " + count + " / " + find.size() + " entries.");
+        }
+     */
+  learner_created: true
+- name: src/phonebook/TimeHandler.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/63/stages/342/implement
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/63/stages/342/implement">JetBrains
+    Academy</a>
+  time: Thu, 15 Oct 2020 05:58:10 UTC
+record: 3
